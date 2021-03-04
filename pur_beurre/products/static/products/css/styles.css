@@ -58,15 +58,40 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
 
+.footer {
+  background-color: #345a61;
+}
+
 body {
   margin: 0;
-  font-family: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
   text-align: left;
   background-color: #fff;
+}
+
+.input-fields {
+  background-color: #DCDCDC;
+  border: none;
+}
+
+.input-products {
+  background-color: #DCDCDC;
+  border: none;
+  padding: 1.25rem 2.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-top-left-radius: 10rem;
+  border-bottom-left-radius: 10rem;
+
+}
+
+.input-products-bar {
+  display: inline-grid;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -181,7 +206,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: "Scope One", sans-serif;
   font-size: 1em;
 }
 
@@ -361,7 +386,7 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
-  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Open Sans", sans-serif;
   font-weight: 500;
   line-height: 1.2;
 }
@@ -1286,6 +1311,8 @@ pre code {
   .col-lg-3 {
     flex: 0 0 25%;
     max-width: 25%;
+    margin-left: 50px;
+    margin-right: 50px;
   }
 
   .col-lg-4 {
@@ -3894,6 +3921,16 @@ input[type=button].btn-block {
 .nav-tabs .nav-item {
   margin-bottom: -1px;
 }
+
+.menu-icon {
+  transition: 0.3s;
+}
+
+.menu-icon:hover, .menu-icon:focus {
+  transform: translate(0, -10px);
+  outline: none;
+}
+
 .nav-tabs .nav-link {
   border: 1px solid transparent;
   border-top-left-radius: 0.25rem;
@@ -5564,7 +5601,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5666,7 +5703,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6073,7 +6110,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #f4623a !important;
+  background-color: #c45525 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -9649,7 +9686,7 @@ button.bg-dark:focus {
 }
 
 .text-monospace {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-family: "Scope One", sans-serif;
 }
 
 .text-justify {
@@ -9994,7 +10031,7 @@ hr.light {
 }
 
 .btn {
-  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
 }
 
 .btn-xl {
@@ -10006,6 +10043,17 @@ hr.light {
   border-radius: 10rem;
 }
 
+.btn-product {
+  padding: 1.25rem 2.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-bottom-right-radius: 10rem;
+  border-top-right-radius: 10rem;
+}
+
+
 .page-section {
   padding: 8rem 0;
 }
@@ -10016,13 +10064,13 @@ hr.light {
   transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
-  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
   font-weight: 700;
   color: #212529;
 }
 #mainNav .navbar-nav .nav-item .nav-link {
   color: #6c757d;
-  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
   font-weight: 700;
   font-size: 0.9rem;
   padding: 0.75rem 0;
@@ -10036,10 +10084,12 @@ hr.light {
 @media (min-width: 992px) {
   #mainNav {
     box-shadow: none;
-    background-color: transparent;
+    background-color: #345a61;
   }
   #mainNav .navbar-brand {
     color: rgba(255, 255, 255, 0.7);
+    padding-left: inherit;
+    font-size: 2rem;
   }
   #mainNav .navbar-brand:hover {
     color: #fff;
@@ -10075,7 +10125,7 @@ hr.light {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../assets/img/bg-masthead.jpg");
+  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/menu.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -10128,7 +10178,7 @@ header.masthead h1 {
   text-align: center;
 }
 #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-sm .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-md .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-lg .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-xl .portfolio-box .portfolio-box-caption .project-category {
-  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Scope One", sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
