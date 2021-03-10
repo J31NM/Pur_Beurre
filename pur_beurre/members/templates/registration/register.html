@@ -1,11 +1,54 @@
-<h1>Register</h1>
+<!DOCTYPE html>
+
+<html>
+<head>
+    {% load static %}
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" alt="pur_beurre favicon" href="{% static 'products/img/favicon.png' %}"/>
+
+<style>
+    body {
+        font-family: "Scope One", sans-serif;
+        padding-left: 45rem;
+        padding-top: 12rem;
+        background-image: url("{% static 'img/bg_register.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    h1   {
+        font-family: "Open Sans", sans-serif;
+    }
+
+    input {
+        background-color: #DCDCDC;
+        border: none;
+    }
+
+    .btn-secondary {
+      color: #fff;
+      background-color: #345A61;
+      border-color: #6c757d;
+}
+    .btn-secondary:hover {
+      color: #fff;
+      background-color: #5a6268;
+      border-color: #545b62;
+    }
+
+</style>
+</head>
+<body>
+<h1>Je crée mon compte</h1>
 <br/><br/>
 
 <div class="form-group">
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-secondary">Register</button>
+        <button class="btn btn-secondary">Créer</button>
     </form>
 
 </div>
+</body>
+</html>

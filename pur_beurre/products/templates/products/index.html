@@ -1,65 +1,7 @@
-<!DOCTYPE html>
+{% extends 'products/base.html' %}
 
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+{% block content %}
 
-    {% load static %}
-
-    <title>Pur Beurre</title>
-    <!-- Police Open Sans-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <!-- Police Scope One-->
-    <link href="https://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css">
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" alt="pur_beurre favicon" href="{% static 'products/img/favicon.png' %}"/>
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
-    <!-- Bootstrap Core CSS-->
-    <link rel="stylesheet" type="text/css" href="{% static 'products/css/styles.css' %}"/>
-
-
-</head>
-<body id="page-top">
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-    <div class="container">
-        <img class="logo" alt="pur_beurre logo" src="{% static 'products/img/logo.png' %}">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Pur Beurre</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger">
-                        <form method="post" autocomplete="off">
-                            <input class="input-fields" value="" type="text" name="user" id="query-user" placeholder="Chercher"/>
-                        </form>
-                    </a>
-                </li>
-
-                {% if user.is_authenticated %}
-
-                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="#home"><img title="Mon compte" alt="menu_rat" src="{% static 'products/img/menu_rat_min.png' %}"></a></li>
-                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="#portfolio"><img title="Mes aliments" alt="menu_aliments" src="{% static 'products/img/menu_aliments_min.png' %}"></a></li>
-                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><img title="Déconnexion" alt="menu_logout" src="{% static 'products/img/menu_logout_min.png' %}"></a></li>
-
-                {% else %}
-
-                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="{% url 'register' %}"><img title="Créer un compte" alt="menu_create" src="{% static 'products/img/menu_compte_min.png' %}"></a></li>
-                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="{% url 'login' %}"><img title="M'identifier" alt="menu_login" src="{% static 'products/img/menu_rat_min.png' %}"></a></li>
-
-                {% endif %}
-
-            </ul>
-        </div>
-    </div>
-</nav>
 <!-- Masthead-->
 <header class="masthead">
     <div class="container h-100">
@@ -94,6 +36,7 @@
                     Pur Beurre est l'initiative de deux amoureux de la gastronomie française, Colette Tatou et Rémy, que vous avez déjà certainement rencontrés dans notre excellent restaurant Ratatouille.
                 </p>
             </div>
+            {% load static %}
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="mt-5">
@@ -136,26 +79,5 @@
         </div>
     </div>
 </section>
-<!-- Footer-->
-<footer class="py-5 footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-                <a class="d-block" href="">Mentions légales</a>
-            </div>
-            <div class="col-lg-4 mr-auto text-center">
-                <a class="d-block" href="">Contact</a>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- Bootstrap core JS-->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Third party plugin JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
-</body>
-</html>
+
+{% endblock %}
