@@ -35,7 +35,7 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                <li class="nav-item">
+                <li class="nav-item nav-input">
                     <a class="nav-link js-scroll-trigger">
                         <form method="post" autocomplete="off">
                             <input class="input-fields" value="" type="text" name="user" id="query-user" placeholder="Chercher"/>
@@ -45,7 +45,7 @@
 
                 {% if user.is_authenticated %}
 
-                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="#home"><img title="Mon compte" alt="menu_rat" src="{% static 'products/img/menu_rat_min.png' %}"></a></li>
+                    <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="{% url 'user_account' %}"><img title="Mon compte" alt="menu_rat" src="{% static 'products/img/menu_rat_min.png' %}"></a></li>
                     <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="#portfolio"><img title="Mes aliments" alt="menu_aliments" src="{% static 'products/img/menu_aliments_min.png' %}"></a></li>
                     <li class="nav-item menu-icon"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><img title="Déconnexion" alt="menu_logout" src="{% static 'products/img/menu_logout_min.png' %}"></a></li>
 
@@ -66,7 +66,7 @@
 {% endblock %}
 
 <!-- Footer-->
-<footer class="py-5 footer">
+<footer class="py-5 footer" id="footer">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">

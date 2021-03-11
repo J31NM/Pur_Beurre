@@ -1,0 +1,29 @@
+{% extends 'products/base.html' %}
+
+
+{% block content %}
+
+{% load static %}
+
+<header class="user_account_img">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10">
+                <h1 class="text-uppercase text-white font-weight-bold">AHOY {{ user.username }} !</h1>
+                <hr class="divider my-4" />
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="page-section bg-primary" id="about">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-2 mt-0 vh-50">Adresse mail : {{ user.email }} </h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
