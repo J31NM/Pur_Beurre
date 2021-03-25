@@ -1,0 +1,23 @@
+<div class="pb-form">
+    <h1>{{ title }}</h1>
+    <p></p>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <input type="{{ field.widget_type }}"
+                       maxlength="{{ field.field.max_length }}" required
+                       class="form-control  form-control-lg" name="{{ field.name }}"
+                       id="{{ field.id_for_label }}" aria-describedby="help" placeholder="{{ field.label }}">
+                {% for error in field.errors %}
+                    <span class="error" >{{ error }}</span> <br />
+                {% endfor %}
+                <small id="help" class="form-text text-muted">{{ field.help_text }}</small>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-lg btn-primary float-right">{{ button }}</button>
+        <div class="clearfix"></div>
+    </form>
+
+</div>
