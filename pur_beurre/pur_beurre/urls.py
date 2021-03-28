@@ -14,10 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404, handler500
 
 from products import views
+
+if settings.FAKE_STATIC_PROD:
+    from helper import fake_static_for_prod as static
+else:
+    from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name="home"),
@@ -25,28 +32,19 @@ urlpatterns = [
     path('tatou/', admin.site.urls),
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
+        path('error_404/', views.error_404),
+        path('error_500/', views.error_500),
+
     ] + urlpatterns
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+handler404 = 'products.views.error_404'
+handler500 = 'products.views.error_500'
 
 
