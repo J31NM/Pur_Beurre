@@ -13,12 +13,12 @@
             <div class="col-lg-8 align-self-baseline">
                 <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</h2>
                 <div class="input-products-bar">
-                    <form method="post" autocomplete="off">
+                    <form method="post" autocomplete="off" accept-charset="utf-8">
                         <input class="input-products" value="" type="text" name="product" id="query-product" placeholder="Produit" size="60"/>
                     </form>
                 </div>
                 <div class="input-products-bar">
-                    <a class="btn btn-primary btn-product js-scroll-trigger" href="#about">Chercher</a>
+                    <a class="btn btn-primary btn-product js-scroll-trigger" href="{% url 'products' %}" target="_blank">Chercher</a>
                 </div>
             </div>
         </div>
