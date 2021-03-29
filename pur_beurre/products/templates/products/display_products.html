@@ -7,13 +7,25 @@
         </div>
     {% else %}
         {% for product in object_list %}
-        <div class="col-lg-4 text-center">
-            <a href="{% url 'details' product_id=product.id %}">
-                <img class="img-responsive" style="width: 90%" src="{{ product.picture }}" alt="{{ product.name }}">
-            </a>
-            <h3 class="text-white-75 font-weight-light mb-5"><a>{{ product.name }}</a></h3>
-        </div>
-        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+            <div class="col-lg-4 text-center align-items-center">
+                <a href="{% url 'details' product_id=product.id %}">
+                    <img class="img-responsive" style="width: 90%" src="{{ product.picture }}" alt="{{ product.name }}">
+                    {% if product.nutriscore == 'A' %}
+                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</span>
+                    {% elif product.nutriscore == 'B' %}
+                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</span>
+                    {% elif product.nutriscore == 'C' %}
+                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</span>
+                    {% elif product.nutriscore == 'D' %}
+                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</span>
+                    {% else %}
+                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</span>
+                    {% endif %}
+                </a>
+                <h3 class="text-white-75 font-weight-light mb-3"><a>{{ product.name }}</a></h3>
+                <a class="btn btn-primary btn-product-2 js-scroll-trigger mb-5">Sauvegarder</a>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
         {% endfor %}
     {% endif %}
 </section>

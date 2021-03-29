@@ -1,22 +1,67 @@
 {% extends 'products/base.html' %}
 
+<style>
+    .product-detail-img{
+        padding-bottom: 2rem;
+        height: 200%;
+    }
+
+    .product-nutriscore-img{
+        padding-bottom: 2rem;
+        max-height: 50%;
+    }
+</style>
+
 {% block content %}
-
-{#    <section class="page-section">#}
-{#        <div>Le produit que vous recherchez est : {{ product.name }}</div>#}
-{#    </section>#}
-
-{#<header class="user_account_img">#}
-    <div class="container h-100">
-        <div class="row h-100 align-items-center justify-content-center text-center">
-            <div class="col-lg-10">
-                <h1 class="text-uppercase font-weight-bold">{{ product.name }}</h1>
-                <hr class="divider my-4" />
+<nav>
+    <section class="page-section bg-dark">
+        <div class="container">
+            <div class="row h-80 align-items-center justify-content-center text-center">
+                <img class="product-detail-img" alt="product-detail" src="{{ product.picture }}">
+                <div class="col-lg-4">
+                    <h1 class="text-uppercase text-white font-weight-bold">{{ product.name }}</h1>
+                    <hr class="divider my-4" />
+                </div>
             </div>
         </div>
-    </div>
-{#</header>#}
+    </section>
+</nav>
+
+<nav>
+{% load static %}
+    <section class="page-section" style="background-color: #ffffff">
+        <div class="container">
+            <div class="row h-80 text-center">
+                <div class="col-6">
+                {% if product.nutriscore == 'A' %}
+                    <img class="product-nutriscore-img" alt="nutriscore-A" src="{% static 'products/img/logo-nutriscore-A.png' %}">
+                {% elif product.nutriscore == 'B' %}
+                    <img class="product-nutriscore-img" alt="nutriscore-B" src="{% static 'products/img/logo-nutriscore-B.png' %}">
+                {% elif product.nutriscore == 'C' %}
+                    <img class="product-nutriscore-img" alt="nutriscore-C" src="{% static 'products/img/logo-nutriscore-C.png' %}">
+                {% elif product.nutriscore == 'D' %}
+                    <img class="product-nutriscore-img" alt="nutriscore-D" src="{% static 'products/img/logo-nutriscore-D.png' %}">
+                {% else %}
+                    <img class="product-nutriscore-img" alt="nutriscore-E" src="{% static 'products/img/logo-nutriscore-E.png' %}">
+                {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    <h4>Repères nutritionnels pour 100g :</h4>
+                    <br>
+                        <li>12.5g de graisse en quantité modérée</li></br>
+                        <li>5.5g de graisse saturée en grande modérée</li></br>
+                        <li>2.4g de sucre en petite quantité</li></br>
+                        <li>1.5g de sel en quantité modérée</li></br>
+                    </ul>
+                </div>
+            </div>
+            <div class="col_lg_4 align-items-center justify-content-center text-center" style="padding-top: 5rem">
+                <a class="btn btn-primary btn-product-2 js-scroll-trigger mb-5" href="{{ product.picture }}">Voir la fiche d'OpenFoodFacts</a>
+            </div>
+        </div>
+    </section>
+</nav>
+
 
 {% endblock %}
-
 

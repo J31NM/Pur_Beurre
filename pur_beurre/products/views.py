@@ -36,6 +36,9 @@ class Favorites(ListView):
     model = Favorite
     template_name = 'products/favorites.html'
 
+    # def get(self, request, **options):
+
+
 
 class Details(ListView):
     model = Product
