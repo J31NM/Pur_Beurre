@@ -1,32 +1,80 @@
 
 
 <section class="page-section bg-primary">
-    {% if products|length_is:"0" %}
+    {% if object_list|length_is:"0" %}
         <div class="text-center">
             Désolé nous n'avons trouvé aucun résultat..
         </div>
     {% else %}
         {% for product in object_list %}
-            <div class="col-lg-4 text-center align-items-center">
-                <a href="{% url 'details' product_id=product.id %}">
-                    <img class="img-responsive" style="width: 90%" src="{{ product.picture }}" alt="{{ product.name }}">
-                    {% if product.nutriscore == 'A' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</span>
-                    {% elif product.nutriscore == 'B' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</span>
-                    {% elif product.nutriscore == 'C' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</span>
-                    {% elif product.nutriscore == 'D' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</span>
-                    {% else %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</span>
-                    {% endif %}
-                </a>
-                <h3 class="text-white-75 font-weight-light mb-3"><a>{{ product.name }}</a></h3>
-                <a class="btn btn-primary btn-product-2 js-scroll-trigger mb-5">Sauvegarder</a>
-            </div>
+            <span class="row-cols-3">
+                <div class="col-lg-4 text-center align-items-center">
+                    <a href="{% url 'details' product_id=product.id %}">
+                        <img class="img-responsive" style="width: 90%" src="{{ product.picture }}" alt="{{ product.name }}">
+                        {% if product.nutriscore == 'A' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</span>
+                        {% elif product.nutriscore == 'B' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</span>
+                        {% elif product.nutriscore == 'C' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</span>
+                        {% elif product.nutriscore == 'D' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</span>
+                        {% else %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</span>
+                        {% endif %}
+                    </a>
+                    <h3 class="text-white-75 font-weight-light mb-3"><a>{{ product.name }}</a></h3>
+                    <a class="btn btn-primary btn-product-2 js-scroll-trigger mb-5">Sauvegarder</a>
+                </div>
+            </span>
             {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
         {% endfor %}
     {% endif %}
+    <nav class="align-items-center text-center align-self-baseline">
+    <ul class="pagination-lg">
+
+        {% if page_obj.has_previous %}
+            <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+        {% endif %}
+        </br>
+        <a>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</a>
+    </ul>
+</nav>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
