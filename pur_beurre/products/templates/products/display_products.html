@@ -3,11 +3,11 @@
 <section class="page-section bg-primary">
     {% if object_list|length_is:"0" %}
         <div class="text-center">
-            Désolé nous n'avons trouvé aucun résultat..
+            Vous n'avez pas de produits enregistrés
         </div>
     {% else %}
         {% for product in object_list %}
-            <span class="row-cols-3">
+            <div class="row-cols-3">
                 <div class="col-lg-4 text-center align-items-center">
                     <a href="{% url 'details' product_id=product.id %}">
                         <img class="img-responsive" style="width: 90%" src="{{ product.picture }}" alt="{{ product.name }}">
@@ -24,25 +24,38 @@
                         {% endif %}
                     </a>
                     <h3 class="text-white-75 font-weight-light mb-3"><a>{{ product.name }}</a></h3>
-                    <a class="btn btn-primary btn-product-2 js-scroll-trigger mb-5">Sauvegarder</a>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% with product.is_favorite as is_favorite %}
+                            {% if is_favorite and on_favorite_view  %}
+                                <input type="submit" class="btn btn-primary btn-product-2 js-scroll-trigger mb-5" name="delete_favorite" value="Supprimer des favoris"/>
+                            {% elif is_favorite  %}
+                                <span>Ce produit est déjà dans vos favoris</span>
+                            {% else %}
+                                <input type="submit" class="btn btn-primary btn-product-2 js-scroll-trigger mb-5" name="save_favorite" value="Sauvegarder"/>
+                            {% endif %}
+                        {% endwith %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}"/>
+                    </form>
                 </div>
-            </span>
+            </div>
             {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
         {% endfor %}
     {% endif %}
     <nav class="align-items-center text-center align-self-baseline">
-    <ul class="pagination-lg">
-
-        {% if page_obj.has_previous %}
-            <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+        {% if is_paginated %}
+            <ul class="pagination-lg">
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+                {% endif %}
+                </br>
+                <a>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</a>
+            </ul>
         {% endif %}
-        {% if page_obj.has_next %}
-            <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}">Suivant</a>
-        {% endif %}
-        </br>
-        <a>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</a>
-    </ul>
-</nav>
+    </nav>
 </section>
 
 
