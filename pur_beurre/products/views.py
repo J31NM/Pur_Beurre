@@ -30,7 +30,7 @@ def error_500(request, exception=None):
 
 
 class PaginatedListView(ListView):
-    paginate_by = 5
+    paginate_by = 6
 
 
 class Products(PaginatedListView):
