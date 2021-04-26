@@ -68,4 +68,3 @@ if __name__ == '__main__':
     COMMAND = Command()
     # print(COMMAND._fetch_categories())
     print(COMMAND._fetch_products())
-

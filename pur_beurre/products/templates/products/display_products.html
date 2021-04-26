@@ -10,19 +10,19 @@
             <div class="row no-gutters">
                 {% for product in object_list %}
                 <div class=" portfolio-box col-lg-4 text-center align-items-center">
-                <a href="{% url 'details' product_code=product.code %}">
-                    <img class="img-responsive" style="width: 90%" src="{{ product.picture }}" alt="{{ product.name }}">
-                    {% if product.nutriscore == 'A' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</span>
-                    {% elif product.nutriscore == 'B' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</span>
-                    {% elif product.nutriscore == 'C' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</span>
-                    {% elif product.nutriscore == 'D' %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</span>
-                    {% else %}
-                        <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</span>
-                    {% endif %}
+                    <a href="{% url 'details' product_code=product.code %}">
+                        <img class="img-responsive" style="width: 90%; max-width:250px" src="{{ product.picture }}" alt="{{ product.name }}">
+                        {% if product.nutriscore == 'a' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</span>
+                        {% elif product.nutriscore == 'b' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</span>
+                        {% elif product.nutriscore == 'c' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</span>
+                        {% elif product.nutriscore == 'd' %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</span>
+                        {% else %}
+                            <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</span>
+                        {% endif %}
                 </a>
                 <h3 class="text-white-75 font-weight-light mb-3"><a>{{ product.name }} de {{ product.brand }}</a></h3>
                 {% if user.is_authenticated %}
@@ -30,10 +30,12 @@
                         {% csrf_token %}
                         {% with product.is_favorite as is_favorite %}
                             {% if is_favorite and on_favorite_view  %}
+                                <i class="fas fa-trash fa-3x" style="margin-right: 10px; margin-bottom: 10px" aria-hidden="true"></i>
                                 <input type="submit" class="btn btn-primary btn-product-2 js-scroll-trigger mb-5" name="delete_favorite" value="Supprimer des favoris"/>
                             {% elif is_favorite  %}
                                 <span>Ce produit est déjà dans vos favoris</span>
                             {% else %}
+                                <i class="fas fa-save fa-3x" style="margin-right: 20px; color: white; margin-bottom: 10px" aria-hidden="true"></i>
                                 <input type="submit" class="btn btn-primary btn-product-2 js-scroll-trigger mb-5" name="save_favorite" value="Sauvegarder"/>
                             {% endif %}
                         {% endwith %}
