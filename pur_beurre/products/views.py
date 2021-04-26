@@ -45,9 +45,13 @@ class Products(PaginatedListView):
             except self.model.DoesNotExist:
                 # TODO: Handle exceptions
                 raise
-            Favorite.objects.create(user=request.user, product=product)
+            Favorite.objects.create(user=request.user, **product.to_dict)
         # TODO: Handle Ajax call to be more user-friendly (JSON data)
         return self.get(request)
+
+    def get_context_data(self, *args, **kwargs):
+        Product.user = self.request.user
+        return super().get_context_data(*args, **kwargs)
 
 
 class Details(ListView):
@@ -55,10 +59,10 @@ class Details(ListView):
     template_name = 'products/details.html'
 
     def get(self, request, **options):
-        pid = options.get('product_id')
-        if not pid or not str(pid).isdigit():
+        product_code = options.get('product_code')
+        if not product_code:
             raise ValueError('Invalid Product ID provided')
-        product = self.model.objects.get(id=int(pid))
+        product = self.model.objects.get(code=product_code)
         return render(request, self.template_name, {'product': product})
 
 
@@ -69,13 +73,16 @@ class Favorites(LoginRequiredMixin, PaginatedListView):
 
     def post(self, request):
         if 'delete_favorite' in request.POST:
-            product_id = request.POST.get('product_id')
+            favorite_id = request.POST.get('product_id')
             try:
-                product = Product.objects.get(id=product_id)
+                # product = Product.objects.get(id=product_id)
+                favorite = self.model.objects.get(id=favorite_id)
             except self.model.DoesNotExist:
+            # except Product.DoesNotExist:
                 # TODO: Handle exceptions
                 raise
-            product.favorite.delete()
+            favorite.delete()
+            # product.favorite.delete()
             # TODO: Handle Ajax call to be more user-friendly (JSON data)
         return self.get(request)
 
@@ -83,9 +90,5 @@ class Favorites(LoginRequiredMixin, PaginatedListView):
         qs = super().get_queryset()
         return qs.filter(user=self.request.user)
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context["object_list"] = [favorite.product for favorite in context["object_list"]]
-        return context
 
 
