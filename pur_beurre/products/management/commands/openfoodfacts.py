@@ -23,13 +23,13 @@ class Command(BaseCommand):
 
     def _fetch_products(self):
         products = []
-        url = "https://world.openfoodfacts.org/cgi/search.pl?"
+        url = "https://world.openfoodfacts.org/category/"
         payloads_template = {
-            'tag_0': "",
+            'tag_0': " ",
             "page": 1,
             "page_size": 5,
             "json": 1,
-            "action": 'process',
+            # "action": 'process',
         }
         categories = self._fetch_categories()
         for category in categories:
@@ -38,8 +38,8 @@ class Command(BaseCommand):
             product_list = requests.get(url, params=payloads).json()
             if not product_list:
                 continue
-
             for p in product_list['products']:
+                print(p)
                 try:
                     name = p.get('product_name_fr')
                     nutriscore = p.get('nutrition_grades')
@@ -49,7 +49,6 @@ class Command(BaseCommand):
                     code = p.get('code')
                     if not all([name, nutriscore, url, picture, brand, code]):
                         continue
-
                     product_obj = Product.objects.create(
                         name=name, nutriscore=nutriscore, url=url,
                         picture=picture, brand=brand, code=code, category=category
@@ -66,5 +65,5 @@ class Command(BaseCommand):
 
 if __name__ == '__main__':
     COMMAND = Command()
-    # print(COMMAND._fetch_categories())
+    print(COMMAND._fetch_categories())
     print(COMMAND._fetch_products())

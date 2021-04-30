@@ -19,7 +19,7 @@
             <div class="row h-80 align-items-center justify-content-center text-center">
                 <img class="product-detail-img" alt="product-detail" src="{{ product.picture }}">
                 <div class="col-lg-4">
-                    <h1 class="text-uppercase text-white font-weight-bold">{{ product.name }}</h1>
+                    <h1 class="text-uppercase text-white font-weight-bold">{{ product.name }} de {{ product.brand }}</h1>
                     <hr class="divider my-4" />
                 </div>
             </div>
@@ -33,13 +33,13 @@
         <div class="container">
             <div class="row h-80 text-center">
                 <div class="col-6">
-                {% if product.nutriscore == 'A' %}
+                {% if product.nutriscore == 'a' %}
                     <img class="product-nutriscore-img" alt="nutriscore-A" src="{% static 'products/img/logo-nutriscore-A.png' %}">
-                {% elif product.nutriscore == 'B' %}
+                {% elif product.nutriscore == 'b' %}
                     <img class="product-nutriscore-img" alt="nutriscore-B" src="{% static 'products/img/logo-nutriscore-B.png' %}">
-                {% elif product.nutriscore == 'C' %}
+                {% elif product.nutriscore == 'c' %}
                     <img class="product-nutriscore-img" alt="nutriscore-C" src="{% static 'products/img/logo-nutriscore-C.png' %}">
-                {% elif product.nutriscore == 'D' %}
+                {% elif product.nutriscore == 'd' %}
                     <img class="product-nutriscore-img" alt="nutriscore-D" src="{% static 'products/img/logo-nutriscore-D.png' %}">
                 {% else %}
                     <img class="product-nutriscore-img" alt="nutriscore-E" src="{% static 'products/img/logo-nutriscore-E.png' %}">

@@ -53,6 +53,10 @@ class Products(PaginatedListView):
         Product.user = self.request.user
         return super().get_context_data(*args, **kwargs)
 
+    def get_queryset(self):
+        query = self.request.POST.get('product', None)
+        product = Product.objects.filter(name__icontains=query).first()
+        return Product.objects.filter(category=product.category, nutriscore__lt=product.nutriscore)
 
 class Details(ListView):
     model = Product
