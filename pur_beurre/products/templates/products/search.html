@@ -2,20 +2,21 @@
 
 {% block content %}
 
-<header class="user_account_img">
-    <div class="container h-100">
+    {% if product %}
+<section class="user_account_img">
+    <div class="container">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-10">
                 <h1 class="text-uppercase text-white font-weight-bold">Aliment recherché</h1>
-                <img class="product-detail-img" alt="product-detail" src="{{ product.picture }}">
-                <div>
-                    <h1 class="text-white">{{ product.name }} de {{ product.brand }}</h1>
+                <img class="product-detail-img" alt="product-detail" src="{{ product.picture }}" style="max-height: 100px">
+                <div class="col-lg-4">
+                    <p class="text-white">{{ product.name }} de {{ product.brand }}</p>
                 </div>
                 <hr class="divider my-4" />
             </div>
         </div>
     </div>
-</header>
+</section>
 
 <section class="page-section bg-primary">
     <div class="container">
@@ -29,6 +30,16 @@
 
 {% include "products/display_products.html" with on_favorite_view=False %}
 
-
+{% else %}
+        <section class="page-section bg-primary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-2 mt-0 mb-0">No products found for `{{ query }}`</h2>
+            </div>
+        </div>
+    </div>
+</section>
+    {% endif %}
 {% endblock %}
 

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views import generic
 from django.views.generic import ListView, DetailView
-from django.http import HttpResponse, request
+from django.http import HttpResponse, request, HttpResponseRedirect
 
 from .models import Category, Product, Favorite
 
@@ -29,6 +29,34 @@ def error_500(request, exception=None):
     return render(request, '500.html', context)
 
 
+def save_product_into_favorite(request):
+    if 'save_favorite' in request.POST:
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            # TODO: Handle exceptions
+            raise
+        Favorite.objects.create(user=request.user, **product.to_dict)
+    # TODO: Handle Ajax call to be more user-friendly (JSON data)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def delete_product_into_favorite(request):
+    if 'delete_favorite' in request.POST:
+        favorite_id = request.POST.get('product_id')
+        try:
+            # product = Product.objects.get(id=product_id)
+            favorite = Favorite.objects.get(id=favorite_id)
+        except Favorite.DoesNotExist:
+            # TODO: Handle exceptions
+            raise
+        favorite.delete()
+        # product.favorite.delete()
+        # TODO: Handle Ajax call to be more user-friendly (JSON data)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 class PaginatedListView(ListView):
     paginate_by = 6
 
@@ -37,26 +65,24 @@ class Products(PaginatedListView):
     model = Product
     template_name = 'products/search.html'
 
-    def post(self, request):
-        if 'save_favorite' in request.POST:
-            product_id = request.POST.get('product_id')
-            try:
-                product = self.model.objects.get(id=product_id)
-            except self.model.DoesNotExist:
-                # TODO: Handle exceptions
-                raise
-            Favorite.objects.create(user=request.user, **product.to_dict)
-        # TODO: Handle Ajax call to be more user-friendly (JSON data)
-        return self.get(request)
-
     def get_context_data(self, *args, **kwargs):
         Product.user = self.request.user
-        return super().get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
+        context['query'] = self.request.POST.get('product', "")
+        try:
+            context['product'] = context['object_list'].pop(0)
+        except IndexError:
+            pass
+        return context
 
     def get_queryset(self):
-        query = self.request.POST.get('product', None)
-        product = Product.objects.filter(name__icontains=query).first()
-        return Product.objects.filter(category=product.category, nutriscore__lt=product.nutriscore)
+        query = self.request.GET.get('product', "")
+        products = Product.objects.filter(name__icontains=query)
+        if not products:
+            return []
+        product = products.first()
+        return [product] + list(Product.objects.filter(category=product.category, nutriscore__lt=product.nutriscore))
+
 
 class Details(ListView):
     model = Product
@@ -66,7 +92,7 @@ class Details(ListView):
         product_code = options.get('product_code')
         if not product_code:
             raise ValueError('Invalid Product ID provided')
-        product = self.model.objects.get(code=product_code)
+        product = self.model.objects.filter(code=product_code).first()
         return render(request, self.template_name, {'product': product})
 
 
@@ -74,21 +100,6 @@ class Favorites(LoginRequiredMixin, PaginatedListView):
     login_url = reverse_lazy('login')
     model = Favorite
     template_name = 'products/favorites.html'
-
-    def post(self, request):
-        if 'delete_favorite' in request.POST:
-            favorite_id = request.POST.get('product_id')
-            try:
-                # product = Product.objects.get(id=product_id)
-                favorite = self.model.objects.get(id=favorite_id)
-            except self.model.DoesNotExist:
-            # except Product.DoesNotExist:
-                # TODO: Handle exceptions
-                raise
-            favorite.delete()
-            # product.favorite.delete()
-            # TODO: Handle Ajax call to be more user-friendly (JSON data)
-        return self.get(request)
 
     def get_queryset(self):
         qs = super().get_queryset()
