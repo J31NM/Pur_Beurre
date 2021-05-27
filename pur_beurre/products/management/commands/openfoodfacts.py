@@ -28,7 +28,6 @@ class Command(BaseCommand):
             "page": 1,
             "page_size": 5,
             "json": True,
-            # "action": 'process',
         }
         categories = self._fetch_categories()
         for category in categories:
@@ -39,7 +38,6 @@ class Command(BaseCommand):
             if not product_list:
                 continue
             for p in product_list['products']:
-                print(p)
                 try:
                     name = p.get('product_name_fr')
                     nutriscore = p.get('nutrition_grades')

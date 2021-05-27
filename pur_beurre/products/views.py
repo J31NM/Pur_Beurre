@@ -81,7 +81,7 @@ class Products(PaginatedListView):
         if not products:
             return []
         product = products.first()
-        return [product] + list(Product.objects.filter(category=product.category, nutriscore__lt=product.nutriscore))
+        return [product] + list(products.filter(category=product.category, nutriscore__lt=product.nutriscore))
 
 
 class Details(ListView):
