@@ -1,6 +1,9 @@
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 
 from .models import *
@@ -13,8 +16,11 @@ class UserRegisterView(generic.CreateView):
     success_url = reverse_lazy('login')
 
 
-class UserLoginView(generic.CreateView):
-    form_class = UserCreationForm
+class UserLogoutView(LogoutView):
+    pass
+
+
+class UserLoginView(LoginView):
     template_name = 'registration/login.html'
     success_url = reverse_lazy('products/home')
 

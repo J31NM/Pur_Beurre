@@ -30,7 +30,7 @@ urlpatterns = [
     path('', views.index, name="home"),
     path('products/', include('products.urls')),
     path('tatou/', admin.site.urls),
-    path('members/', include('django.contrib.auth.urls')),
+    # path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
