@@ -17,7 +17,7 @@ class UserRegisterView(generic.CreateView):
 
 
 class UserLogoutView(LogoutView):
-    pass
+    success_url = reverse_lazy('home')
 
 
 class UserLoginView(LoginView):
