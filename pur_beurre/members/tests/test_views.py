@@ -49,8 +49,19 @@ class TestViews(TestCase):
         self.assertEqual(len(registered_users), 1)
 
     def test_user_login_view_POST(self):
-        data = dict(username='rata', password='touille')
-        response = self.client.post(self.login_url, data=data)
+        expected_email = 'test_user@mail.com'
+        expected_username = 'rata'
+        expected_password = 'touille12345'
+        data = dict(
+            username=expected_username, password=expected_password
+        )
+        user = User.objects.create_user(**data)
+
+        response = self.client.post(self.login_url, data, follow=True)
+
         self.assertEquals(response.status_code, 200)
+        self.assertTrue(response.context['user'].is_active)
+        self.assertTrue(response.context['user'].is_authenticated)
+
         print(response)
 
