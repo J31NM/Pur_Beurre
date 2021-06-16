@@ -13,6 +13,10 @@ def index(request):
     return render(request, 'products/index.html', {})
 
 
+def legals(request):
+    return render(request, 'products/legals.html', {})
+
+
 def error_404(request, exception=None):
     context = {
         'status': 404,

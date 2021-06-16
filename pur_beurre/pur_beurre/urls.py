@@ -32,6 +32,7 @@ urlpatterns = [
     path('tatou/', admin.site.urls),
     # path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
+    path('legals/', views.legals, name="legal_notices"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
