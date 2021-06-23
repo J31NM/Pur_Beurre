@@ -1,6 +1,9 @@
-<div class="pb-form">
-    <h1>{{ title }}</h1>
-    <p></p>
+<div class="pb-form container-fluid" style="">
+    <div class="row">
+        <h1 class="col-xs-4 col-md-8">{{ title }}</h1>
+        <p></p>
+    </div>
+
 
     <form method="post" action=".">
         {% csrf_token %}
@@ -13,7 +16,7 @@
                 {% for error in field.errors %}
                     <span class="error" >{{ error }}</span> <br />
                 {% endfor %}
-                <small id="help" class="form-text text-muted">{{ field.help_text }}</small>
+                <small id="help" class="form-text">{{ field.help_text }}</small>
             </div>
         {% endfor %}
         <button type="submit" class="btn btn-lg btn-primary float-right">{{ button }}</button>

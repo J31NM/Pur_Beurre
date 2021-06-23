@@ -4,12 +4,21 @@
 
 {% block extra_css %}
 <style>
-    body {
-        padding-left: 45rem;
-        padding-top: 12rem;
+    @media (min-width: 1200px) {
+        body {
+        padding-left: 35rem;
+        padding-top: 10rem;
         background-image: url("{% static 'img/bg_register.jpg' %}");
         background-repeat: no-repeat;
         background-size: cover;
+        }
+    }
+
+    @media (min-width: 10px) and (max-width: 1190px){
+        body {
+        background-color: #86EBE6;
+        }
+
     }
 
     .error {
@@ -20,7 +29,6 @@
     .pb-form {
         padding: 1rem;
         max-width: 70%;
-        border: .2rem #fff solid
     }
 </style>
 {% endblock %}

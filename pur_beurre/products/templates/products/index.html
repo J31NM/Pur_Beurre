@@ -10,12 +10,12 @@
                 <h1 class="text-uppercase text-white font-weight-bold">Du gras, oui, mais de qualité !</h1>
                 <hr class="divider my-4" />
             </div>
-            <div class="col-lg-8 align-self-baseline">
+            <div class="col-lg-8 align-self-baseline ">
                 <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</h2>
-                <div class="input-products-bar">
-                    <form method="get" action="{% url 'products' %}" autocomplete="off" accept-charset="utf-8">
+                <div>
+                    <form class="row justify-content-center form-group" method="get" action="{% url 'products' %}" autocomplete="off" accept-charset="utf-8">
                         {% csrf_token %}
-                        <input class="input-products" type="text" name="product" value="" id="query-product" placeholder="Produit" size="60"/>
+                        <input class="input-products w-50" type="text" name="product" value="" id="query-product" placeholder="Produit"/>
                         <button type="submit" class="btn btn-primary btn-product js-scroll-trigger">Chercher</button>
                     </form>
                 </div>

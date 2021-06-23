@@ -72,7 +72,7 @@ class Products(PaginatedListView):
     def get_context_data(self, *args, **kwargs):
         Product.user = self.request.user
         context = super().get_context_data(*args, **kwargs)
-        context['query'] = self.request.POST.get('product', "")
+        context['query'] = self.request.GET.get('product', "")
         try:
             context['product'] = context['object_list'].pop(0)
         except IndexError:
