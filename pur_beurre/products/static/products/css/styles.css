@@ -515,7 +515,8 @@ mark,
 
 .pastille-nutriscore {
   position: absolute;
-  top: -1rem; right:1rem;
+  display: block;
+  top: 2rem; right:1rem;
   width: 60px; height: 60px;
   border-radius: 50%;
 }
@@ -6148,6 +6149,10 @@ button.bg-primary:focus {
 
 .bg-secondary {
   background-color: #6c757d !important;
+}
+
+.bg-three {
+  background-color: #E8A75D !important;
 }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
