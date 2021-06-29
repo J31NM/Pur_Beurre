@@ -48,10 +48,10 @@
                 <div class="col-lg-6">
                     <h4>Repères nutritionnels pour 100g :</h4>
                     <br>
-                        <li>12.5g de graisse en quantité modérée</li></br>
-                        <li>5.5g de graisse saturée en grande modérée</li></br>
-                        <li>2.4g de sucre en petite quantité</li></br>
-                        <li>1.5g de sel en quantité modérée</li></br>
+                        <li>{{ product.nutrients.fat.quantity }}g de graisse en quantité {{ product.nutrients.fat.level }}</li></br>
+                        <li>{{ product.nutrients.saturated_fat.quantity }}g de graisse saturée en quantité {{ product.nutrients.saturated_fat.level }}</li></br>
+                        <li>{{ product.nutrients.sugar.quantity }}g de sucre en quantité {{ product.nutrients.sugar.level }}</li></br>
+                        <li>{{ product.nutrients.salt.quantity }}g de sel en quantité {{ product.nutrients.salt.level }}</li></br>
                     </ul>
                 </div>
             </div>

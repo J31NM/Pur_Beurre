@@ -1,30 +1,30 @@
 
 
-<section class="page-section bg-primary">
-    {% if object_list|length_is:"0" %}
+<section class="page-section bg-three">
+    {% if object_list|length_is:"0" and user.is_authenticated %}
         <div class="text-center">
             Vous n'avez pas de produits enregistrés
         </div>
     {% else %}
         <div class="container-fluid p-3">
-            <div class="row no-gutters">
+            <div class="row align-bottom">
                 {% for product in object_list %}
-                    <div class=" portfolio-box col-lg-4 text-center align-items-center">
+                    <div class="col-lg-4 text-center" style="vertical-align: bottom; border: thick double #345A61; padding-top: 5%">
                         <a href="{% url 'details' product_code=product.code %}">
-                            <img class="img-responsive" style="width: 90%; max-width:250px" src="{{ product.picture }}" alt="{{ product.name }}">
+                            <img class="img-responsive" style="width: 90%; max-width:150px" src="{{ product.picture }}" alt="{{ product.name }}">
                             {% if product.nutriscore == 'a' %}
-                                <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</span>
+                                <div class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #088A29">{{ product.nutriscore }}</div>
                             {% elif product.nutriscore == 'b' %}
-                                <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</span>
+                                <div class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #A4DF01">{{ product.nutriscore }}</div>
                             {% elif product.nutriscore == 'c' %}
-                                <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</span>
+                                <div class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #F6FF2E">{{ product.nutriscore }}</div>
                             {% elif product.nutriscore == 'd' %}
-                                <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</span>
+                                <div class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE9A2E">{{ product.nutriscore }}</div>
                             {% else %}
-                                <span class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</span>
+                                <div class="pastille-nutriscore font-weight-bold text-dark text-center pt-3" style="background: #FE0100">{{ product.nutriscore }}</div>
                             {% endif %}
                         </a>
-                        <h3 class="text-white-75 font-weight-light mb-3"><a>{{ product.name }} de {{ product.brand }}</a></h3>
+                        <h4 class="text-black-75 font-weight-light mb-3"><a>{{ product.name }} de {{ product.brand }}</a></h4>
                         {% if user.is_authenticated %}
                             {% with product.is_favorite as is_favorite %}
                                 {% if is_favorite and on_favorite_view %}
@@ -34,7 +34,7 @@
                                 {% endif %}
                             {% csrf_token %}
                             {% if is_favorite and on_favorite_view  %}
-                                <i class="fas fa-trash fa-3x" style="margin-right: 10px; margin-bottom: 10px" aria-hidden="true"></i>
+                                <i class="fas fa-trash fa-3x" style="margin-right: 10px; margin-bottom: 10px" aria-hidden="true" ></i>
                                 <input type="submit" class="btn btn-primary btn-product-2 js-scroll-trigger mb-5" name="delete_favorite" value="Supprimer des favoris"/>
                             {% elif is_favorite  %}
                                 <span>Ce produit est déjà dans vos favoris</span>
@@ -57,10 +57,10 @@
         {% if is_paginated %}
             <ul class="pagination-lg">
                 {% if page_obj.has_previous %}
-                    <a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+                    <a class="btn btn-secondary" href="?query={{ query }}&page={{ page_obj.previous_page_number }}">Précédent</a>
                 {% endif %}
                 {% if page_obj.has_next %}
-                    <a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+                    <a class="btn btn-secondary" href="?query={{ query }}&page={{ page_obj.next_page_number }}">Suivant</a>
                 {% endif %}
                 </br>
                 <a>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</a>

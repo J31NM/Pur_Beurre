@@ -1,13 +1,28 @@
+# pylint: disable=W0212
+# pylint: disable=E1101
+
+"""
+Module to request OpenFoodFacts API to fill in the database with products
+
+_fetch_categories get main categories
+_fetch_products get products from each category selected if they gather the data we need :
+    name, nutriscore, url, picture, brand, code (product unique id)
+
+"""
+
 import os
+import json
+from django.core.management.base import BaseCommand
+from products.models import Product, Category
 import django
 import requests
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
 django.setup()
-from django.core.management.base import BaseCommand
-from products.models import Product, Category
+
 
 
 class Command(BaseCommand):
+    """ Get products from Openfoodfacts API """
     Help = 'Build database'
 
     def _fetch_categories(self):
@@ -16,7 +31,7 @@ class Command(BaseCommand):
         data_category = requests.get('https://fr.openfoodfacts.org/categories&json=1').json()
         for category in data_category.get('tags', {}):
             category_size = category.get('products')
-            if category_size > 1000:
+            if category_size > 10000:
                 category_obj = Category.objects.create(name=category['name'])
                 categories.append(category_obj)
         return categories
@@ -26,8 +41,13 @@ class Command(BaseCommand):
         root_url = "https://fr.openfoodfacts.org/categorie/{}"
         payloads_template = {
             "page": 1,
-            "page_size": 5,
+            "page_size": 50,
             "json": True,
+        }
+        levels_translations = {
+            'low': 'faible',
+            'moderate': 'modérée',
+            'high': 'élevée',
         }
         categories = self._fetch_categories()
         for category in categories:
@@ -37,19 +57,41 @@ class Command(BaseCommand):
             product_list = product_list.json()
             if not product_list:
                 continue
-            for p in product_list['products']:
+            for product in product_list['products']:
                 try:
-                    name = p.get('product_name_fr')
-                    nutriscore = p.get('nutrition_grades')
-                    product_url = p.get('url')
-                    picture = p.get('image_front_url')
-                    brand = p.get('brands')
-                    code = p.get('code')
+                    name = product.get('product_name_fr')
+                    nutriscore = product.get('nutrition_grades')
+                    product_url = product.get('url')
+                    picture = product.get('image_front_url')
+                    brand = product.get('brands')
+                    code = product.get('code')
+                    nutriments = product.get('nutriments') or {}
+                    nutrient_levels = product.get('nutrient_levels') or {}
+                    nutrients = {
+                        'fat': {
+                            'quantity': nutriments.get('fat_100g'),
+                            'level': levels_translations.get(nutrient_levels.get('fat'))
+                        },
+                        'salt': {
+                            'quantity': nutriments.get('salt_100g'),
+                            'level': levels_translations.get(nutrient_levels.get('salt'))
+                        },
+                        'sugar': {
+                            'quantity': nutriments.get('sugars_100g'),
+                            'level': levels_translations.get(nutrient_levels.get('sugars'))
+                        },
+                        'saturated_fat': {
+                            'quantity': nutriments.get('saturated-fat_100g'),
+                            'level': levels_translations.get(nutrient_levels.get('saturated-fat'))
+                        },
+                    }
+
                     if not all([name, nutriscore, product_url, picture, brand, code]):
                         continue
                     product_obj = Product.objects.create(
                         name=name, nutriscore=nutriscore, url=product_url,
-                        picture=picture, brand=brand, code=code, category=category
+                        picture=picture, brand=brand, code=code, category=category,
+                        nutrients_json=json.dumps(nutrients, indent=4)
                     )
                     products.append(product_obj)
                 except Exception as issue:

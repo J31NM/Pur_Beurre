@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -18,6 +20,32 @@ class Product(models.Model):
     url = models.URLField(null=True)
     picture = models.URLField(null=True, max_length=500)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', blank=True)
+    nutrients_json = models.TextField(null=True, blank=True)
+
+    @property
+    def nutrients(self):
+        try:
+            return json.loads(self.nutrients_json)
+        except (json.JSONDecodeError, TypeError, ValueError, Exception):
+            unknown_value = 'inconnue'
+            return {
+                'fat': {
+                    'quantity': unknown_value,
+                    'level': unknown_value
+                },
+                'salt': {
+                    'quantity': unknown_value,
+                    'level':unknown_value
+                },
+                'sugar': {
+                    'quantity': unknown_value,
+                    'level': unknown_value
+                },
+                'saturated_fat': {
+                    'quantity': unknown_value,
+                    'level': unknown_value
+                },
+            }
 
     @property
     def uid(self):
@@ -49,10 +77,7 @@ class Product(models.Model):
 
 
 class Favorite(models.Model):
-# class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name="favorite")
-
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=64)
     brand = models.CharField(max_length=200, blank=True, null=True)
@@ -71,5 +96,5 @@ class Favorite(models.Model):
 
     def __str__(self):
         return self.name
-        # return self.product.name
+
 
