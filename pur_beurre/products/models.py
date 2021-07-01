@@ -1,10 +1,14 @@
-import json
+# pylint: disable=E0307
 
+""" creating tables for database """
+
+import json
 from django.db import models
 from django.contrib.auth.models import User
 
 
 class Category(models.Model):
+    """ Category just need the id field. Name added for convenience """
     name = models.CharField(max_length=200)
 
     def __str__(self):
@@ -12,6 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """ Product table and properties"""
     user = None
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=64)
@@ -19,11 +24,13 @@ class Product(models.Model):
     nutriscore = models.CharField(max_length=1)
     url = models.URLField(null=True)
     picture = models.URLField(null=True, max_length=500)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,
+                                 related_name='products', blank=True)
     nutrients_json = models.TextField(null=True, blank=True)
 
     @property
     def nutrients(self):
+        """ return a json of 4 common nutrient levels for 100g """
         try:
             return json.loads(self.nutrients_json)
         except (json.JSONDecodeError, TypeError, ValueError, Exception):
@@ -53,6 +60,7 @@ class Product(models.Model):
 
     @property
     def to_dict(self):
+        """ return products data into a dictionary """
         return dict(
             url=self.url,
             code=self.code,
@@ -77,6 +85,7 @@ class Product(models.Model):
 
 
 class Favorite(models.Model):
+    """ Favorite table """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     code = models.CharField(max_length=64)
@@ -84,7 +93,8 @@ class Favorite(models.Model):
     nutriscore = models.CharField(max_length=1)
     url = models.URLField(null=True)
     picture = models.URLField(null=True, max_length=500)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='favorites', blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,
+                                 related_name='favorites', blank=True)
 
     @property
     def uid(self):
@@ -96,5 +106,3 @@ class Favorite(models.Model):
 
     def __str__(self):
         return self.name
-
-

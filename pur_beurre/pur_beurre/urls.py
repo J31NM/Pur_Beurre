@@ -17,7 +17,6 @@ from django.conf import settings
 
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import handler404, handler500
 
 from products import views
 
@@ -30,7 +29,6 @@ urlpatterns = [
     path('', views.index, name="home"),
     path('products/', include('products.urls')),
     path('tatou/', admin.site.urls),
-    # path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
     path('legals/', views.legals, name="legal_notices"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

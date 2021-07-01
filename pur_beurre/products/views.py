@@ -1,23 +1,30 @@
+# pylint: disable=R0901
+
+"""
+Main Script
+"""
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.views import generic
-from django.views.generic import ListView, DetailView
-from django.http import HttpResponse, request, HttpResponseRedirect
-
-from .models import Category, Product, Favorite
+from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+from .models import Product, Favorite
 
 
 def index(request):
+    """ view to main Home page """
     return render(request, 'products/index.html', {})
 
 
 def legals(request):
+    """ view to Legal_Notices page """
     return render(request, 'products/legals.html', {})
 
 
 def error_404(request, exception=None):
+    """ page to display if client error """
     context = {
         'status': 404,
         'exception': exception or ValueError('Debug mode error')
@@ -26,6 +33,7 @@ def error_404(request, exception=None):
 
 
 def error_500(request, exception=None):
+    """ page to display if internal server error """
     context = {
         'status': 500,
         'exception': exception or RuntimeError('Debug mode error')
@@ -34,42 +42,44 @@ def error_500(request, exception=None):
 
 
 def save_product_into_favorite(request):
+    """ Add product into favorites table if user uses "Sauvegarder" button """
     if 'save_favorite' in request.POST:
         product_id = request.POST.get('product_id')
         try:
             product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
-            # TODO: Handle exceptions
+            messages.error(request, "Ce produit n'existe plus")
             raise
         Favorite.objects.create(user=request.user, **product.to_dict)
-    # TODO: Handle Ajax call to be more user-friendly (JSON data)
+        messages.success(request, "Le produit a bien été ajouté à vos favoris !")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def delete_product_into_favorite(request):
+    """ delete product from favorites table if user uses "Supprimer des favoris" button """
     if 'delete_favorite' in request.POST:
         favorite_id = request.POST.get('product_id')
         try:
-            # product = Product.objects.get(id=product_id)
             favorite = Favorite.objects.get(id=favorite_id)
         except Favorite.DoesNotExist:
-            # TODO: Handle exceptions
+            messages.error(request, "Ce produit n'existe plus")
             raise
         favorite.delete()
-        # product.favorite.delete()
-        # TODO: Handle Ajax call to be more user-friendly (JSON data)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class PaginatedListView(ListView):
-    paginate_by = 6
+    """ Set number of products displayed per pages """
+    paginate_by = 7
 
 
 class Products(PaginatedListView):
+    """ Display products form database depending on user input  """
     model = Product
     template_name = 'products/search.html'
 
     def get_context_data(self, *args, **kwargs):
+        """ define the product to search """
         Product.user = self.request.user
         context = super().get_context_data(*args, **kwargs)
         context['query'] = self.request.GET.get('product', "")
@@ -80,19 +90,25 @@ class Products(PaginatedListView):
         return context
 
     def get_queryset(self):
+        """ Get all the products into database that meet three criteria :
+         - contain the product name
+         - belong to the same category
+         - have a higher nutriscore"""
         query = self.request.GET.get('product', "")
         products = Product.objects.filter(name__icontains=query)
         if not products:
             return []
         product = products.first()
-        return [product] + list(products.filter(category=product.category, nutriscore__lt=product.nutriscore))
+        return [product] + list(products.filter(nutriscore__lt=product.nutriscore))
 
 
 class Details(ListView):
+    """ display the selected product details page """
     model = Product
     template_name = 'products/details.html'
 
     def get(self, request, **options):
+        """ use the product_code selected by the user to get the data into the database """
         product_code = options.get('product_code')
         if not product_code:
             raise ValueError('Invalid Product ID provided')
@@ -101,13 +117,11 @@ class Details(ListView):
 
 
 class Favorites(LoginRequiredMixin, PaginatedListView):
+    """ Display products saved by the registered user """
     login_url = reverse_lazy('login')
     model = Favorite
     template_name = 'products/favorites.html'
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(user=self.request.user)
-
-
-
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
