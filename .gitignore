@@ -2,3 +2,5 @@ env/
 venv/
 .idea
 __Pycache__/
+pur_beurre/members/playground.py
+secret_key.txt
