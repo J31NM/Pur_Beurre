@@ -70,21 +70,23 @@ def delete_product_into_favorite(request):
 
 class PaginatedListView(ListView):
     """ Set number of products displayed per pages """
-    paginate_by = 7
+    paginate_by = 6
 
 
 class Products(PaginatedListView):
     """ Display products form database depending on user input  """
     model = Product
     template_name = 'products/search.html'
+    _query = ''
+    _selected_product = None
 
     def get_context_data(self, *args, **kwargs):
         """ define the product to search """
         Product.user = self.request.user
         context = super().get_context_data(*args, **kwargs)
-        context['query'] = self.request.GET.get('product', "")
+        context['query'] = self._query
         try:
-            context['product'] = context['object_list'].pop(0)
+            context['product'] = self._selected_product
         except IndexError:
             pass
         return context
@@ -94,12 +96,12 @@ class Products(PaginatedListView):
          - contain the product name
          - belong to the same category
          - have a higher nutriscore"""
-        query = self.request.GET.get('product', "")
+        self._query = query = self.request.GET.get('product', "")
         products = Product.objects.filter(name__icontains=query)
         if not products:
             return []
-        product = products.first()
-        return [product] + list(products.filter(nutriscore__lt=product.nutriscore))
+        self._selected_product = products.first()
+        return list(products.filter(nutriscore__lt=self._selected_product.nutriscore))
 
 
 class Details(ListView):
