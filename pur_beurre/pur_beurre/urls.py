@@ -14,18 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-
+from django.conf.urls import url
+from django.views.static import serve
 from django.contrib import admin
 from django.urls import path, include
 
 from products import views
 
-if settings.FAKE_STATIC_PROD:
-    from helper import fake_static_for_prod as static
-else:
-    from django.conf.urls.static import static
+# if settings.FAKE_STATIC_PROD:
+#     from helper import fake_static_for_prod as static
+# else:
+from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('', views.index, name="home"),
     path('products/', include('products.urls')),
     path('tatou/', admin.site.urls),

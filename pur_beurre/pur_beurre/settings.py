@@ -22,18 +22,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y_cd%5$wj88xt3-0nf-dypckv3k^7ib02o5t5)p82^xm#ou7c1'
+with open('../secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1']
 
-# FIXME: Remove it for production setup!!!
-FAKE_STATIC_PROD = not DEBUG
-# Application definition
 
+# FAKE_STATIC_PROD = not DEBUG
+
+
+# # Application definition
 INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'django.contrib.admin',
@@ -54,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 ]
 
@@ -131,7 +133,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = '/media/'
+
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS = []
+
+MEDIA_ROOT = [os.path.join(BASE_DIR, 'media')]
 
 INTERNAL_IPS = ['127.0.0.1']
 
