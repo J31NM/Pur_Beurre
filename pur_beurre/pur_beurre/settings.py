@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # with open('../secret_key.txt') as f:
 #     SECRET_KEY = f.read().strip()
-POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
+# POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
