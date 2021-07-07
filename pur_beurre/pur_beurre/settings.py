@@ -23,10 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# with open('../secret_key.txt') as f:
-#     SECRET_KEY = f.read().strip()
-POSTGRE_KEY = "y_cd%5$wj88xt3-0nf-dypckv3k^7ib02o5t5)p82^xm#ou7c1"
-# POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
+with open('../secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
+POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
