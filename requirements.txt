@@ -18,3 +18,4 @@ sqlparse==0.4.1
 toml==0.10.2
 urllib3==1.26.3
 wrapt==1.12.1
+dj_database_url==0.5.0

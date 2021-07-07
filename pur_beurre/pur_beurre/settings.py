@@ -30,7 +30,7 @@ POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['purbeurre_jm.herokuapp.com']
+ALLOWED_HOSTS = ['purbeurre-jm.herokuapp.com']
 
 
 # FAKE_STATIC_PROD = not DEBUG
