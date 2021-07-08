@@ -4,3 +4,4 @@ venv/
 __Pycache__/
 pur_beurre/members/playground.py
 secret_key.txt
+pur_beurre/helper.py
