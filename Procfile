@@ -1,1 +1,1 @@
-web: gunicorn purbeurre-jm.wsgi
+web: gunicorn app:app
