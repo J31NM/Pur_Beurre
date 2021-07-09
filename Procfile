@@ -1,1 +1,1 @@
-web: gunicorn pur_beurre.pur_beurre.wsgi
+web: waitress-serve --port=$PORT purbeurre-jm.wsgi:application

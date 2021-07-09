@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get("POSTGRE_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['purbeurre-jm.herokuapp.com']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['purbeurre-jm.herokuapp.com']
 
 
 # FAKE_STATIC_PROD = not DEBUG
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'members.apps.MembersConfig',
+    'herokuapp',
 ]
 
 MIDDLEWARE = [
@@ -89,12 +91,13 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pur_beurre_db',
-        'USER': 'postgres',
-        'PASSWORD': SECRET_KEY,
-        'HOST': 'localhost',
-        'PORT': '5433',
+        dj_database_url.config(default='postgres://localhost'),
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'pur_beurre_db',
+        # 'USER': 'postgres',
+        # 'PASSWORD': SECRET_KEY,
+        # 'HOST': 'localhost',
+        # 'PORT': '5433',
     }
 }
 
@@ -151,6 +154,9 @@ INTERNAL_IPS = ['127.0.0.1']
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+
 
 if os.environ.get('ENV') == 'PRODUCTION' :
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
