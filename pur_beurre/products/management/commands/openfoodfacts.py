@@ -12,8 +12,9 @@ _fetch_products get products from each category selected if they gather the data
 
 import os
 import json
+from products import models
 from django.core.management.base import BaseCommand
-from products.models import Product, Category
+# from products.models import Product, Category
 import django
 import requests
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
@@ -27,12 +28,12 @@ class Command(BaseCommand):
 
     def _fetch_categories(self):
         categories = []
-        Category.objects.all().delete()
+        models.Category.objects.all().delete()
         data_category = requests.get('https://fr.openfoodfacts.org/categories&json=1').json()
         for category in data_category.get('tags', {}):
             category_size = category.get('products')
             if category_size > 10000:
-                category_obj = Category.objects.create(name=category['name'])
+                category_obj = models.Category.objects.create(name=category['name'])
                 categories.append(category_obj)
         return categories
 
@@ -88,7 +89,7 @@ class Command(BaseCommand):
 
                     if not all([name, nutriscore, product_url, picture, brand, code]):
                         continue
-                    product_obj = Product.objects.create(
+                    product_obj = models.Product.objects.create(
                         name=name, nutriscore=nutriscore, url=product_url,
                         picture=picture, brand=brand, code=code, category=category,
                         nutrients_json=json.dumps(nutrients, indent=4)
