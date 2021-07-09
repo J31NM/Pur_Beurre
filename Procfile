@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT purbeurre-jm.wsgi:application
+web: waitress-serve --port=$PORT pur_beurre.wsgi:application
