@@ -91,13 +91,13 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 DATABASES = {
     'default': {
-        dj_database_url.config(default='postgres://localhost'),
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'pur_beurre_db',
-        # 'USER': 'postgres',
-        # 'PASSWORD': SECRET_KEY,
-        # 'HOST': 'localhost',
-        # 'PORT': '5433',
+        # dj_database_url.config(default='postgres://localhost'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pur_beurre_db',
+        'USER': 'postgres',
+        'PASSWORD': SECRET_KEY,
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
