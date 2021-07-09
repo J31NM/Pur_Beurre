@@ -97,6 +97,8 @@ class Products(PaginatedListView):
          - belong to the same category
          - have a higher nutriscore"""
         self._query = query = self.request.GET.get('product', "")
+        if not query:
+            return []
         products = Product.objects.filter(name__icontains=query)
         if not products:
             return []
