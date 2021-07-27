@@ -104,8 +104,8 @@ DATABASES = {
         'NAME': 'pur_beurre_db',
         'USER': 'postgres',
         'PASSWORD': SECRET_KEY,
-        # 'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': 'localhost',
+        # 'PORT': '5432',
     }
 }
 
