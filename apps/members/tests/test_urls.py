@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from members import views
+from apps.members import views
 
 
 class TestUrls(TestCase):
