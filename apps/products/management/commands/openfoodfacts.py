@@ -17,8 +17,8 @@ import requests
 
 from django.core.management.base import BaseCommand
 
-from products.models import Product
-from products.models import Category
+from apps.products.models import Product
+from apps.products.models import Category
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
 django.setup()
