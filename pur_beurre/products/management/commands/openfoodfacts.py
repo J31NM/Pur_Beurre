@@ -12,16 +12,20 @@ _fetch_products get products from each category selected if they gather the data
 
 import os
 import json
-from django.core.management.base import BaseCommand
-from products.models import Product, Category
 import django
 import requests
+
+from django.core.management.base import BaseCommand
+
+from products.models import Product
+from products.models import Category
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
 django.setup()
 
 
 
-class Command(BaseCommand):
+class Command( BaseCommand):
     """ Get products from Openfoodfacts API """
     Help = 'Build database'
 
