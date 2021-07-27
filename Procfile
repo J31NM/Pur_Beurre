@@ -1,1 +1,1 @@
-web: waitress-serve pur_beurre.pur_beurre.wsgi:application pur_beurre.manage.py:app
+web: gunicorn pur_beurre.wsgi --log-file -
