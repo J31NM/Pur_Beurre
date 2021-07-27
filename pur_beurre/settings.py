@@ -31,7 +31,7 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_IN_PRODUCTION
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['purbeurre-jm.herokuapp.com', 'localhost', '127.0.0.1']
 
 if IS_IN_PRODUCTION:
     ALLOWED_HOSTS += ['purbeurre-jm.herokuapp.com', ]
