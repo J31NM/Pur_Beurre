@@ -20,5 +20,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # from herokuapp.env import load_env
-    # load_env(__file__, "pur_beurre")
