@@ -91,23 +91,23 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',   # 'postgresql', 'mysql', 'sqlite3', 'oracle'.
-        'NAME': os.path.join(BASE_DIR, 'pur_beurre.db'),
-    },
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'pur_beurre_db',
-#         'USER': 'postgres',
-#         'PASSWORD': SECRET_KEY,
-#         'HOST': 'localhost',
-#         'PORT': '5433',
-#     }
+#         'ENGINE': 'django.db.backends.sqlite3',   # 'postgresql', 'mysql', 'sqlite3', 'oracle'.
+#         'NAME': os.path.join(BASE_DIR, 'pur_beurre.db'),
+#     },
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pur_beurre_db',
+        'USER': 'postgres',
+        'PASSWORD': SECRET_KEY,
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 if IS_IN_PRODUCTION:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
