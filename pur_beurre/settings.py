@@ -31,10 +31,10 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_IN_PRODUCTION
 
-ALLOWED_HOSTS = ['purbeurre-jm.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 if IS_IN_PRODUCTION:
-    ALLOWED_HOSTS += ['purbeurre-jm.herokuapp.com', ]
+    ALLOWED_HOSTS += ['.herokuapp.com', ]
 
 
 # # Application definition
@@ -93,14 +93,21 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pur_beurre_db',
-        'USER': 'postgres',
-        'PASSWORD': SECRET_KEY,
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
+        'ENGINE': 'django.db.backends.sqlite3',   # 'postgresql', 'mysql', 'sqlite3', 'oracle'.
+        'NAME': os.path.join(BASE_DIR, 'pur_beurre.db'),
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'pur_beurre_db',
+#         'USER': 'postgres',
+#         'PASSWORD': SECRET_KEY,
+#         'HOST': 'localhost',
+#         'PORT': '5433',
+#     }
+# }
 
 if IS_IN_PRODUCTION:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
