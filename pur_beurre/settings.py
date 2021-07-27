@@ -9,38 +9,36 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
-from pathlib import Path
 import os
-import requests
+
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+IS_IN_PRODUCTION = os.environ.get('ENV') == 'PRODUCTION'
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# with open('../secret_key.txt') as f:
-#     SECRET_KEY = f.read().strip()
-# POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
-SECRET_KEY = os.environ.get("POSTGRE_KEY")
-
+if IS_IN_PRODUCTION:
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+else:
+    SECRET_KEY = 'y_cd%5$wj88xt3-0nf-dypckv3k^7ib02o5t5)p82^xm#ou7c1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['purbeurre-jm.herokuapp.com']
+DEBUG = not IS_IN_PRODUCTION
 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-# FAKE_STATIC_PROD = not DEBUG
+if IS_IN_PRODUCTION:
+    ALLOWED_HOSTS += ['.herokuapp.com', ]
 
 
 # # Application definition
 INSTALLED_APPS = [
-    'products.apps.ProductsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,8 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'members.apps.MembersConfig',
-    'herokuapp',
+    'apps.members',
+    'apps.products',
 ]
 
 MIDDLEWARE = [
@@ -60,10 +58,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+
+if IS_IN_PRODUCTION:
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'pur_beurre.urls'
 
@@ -91,7 +93,6 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 DATABASES = {
     'default': {
-        # dj_database_url.config(default='postgres://localhost'),
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pur_beurre_db',
         'USER': 'postgres',
@@ -101,6 +102,8 @@ DATABASES = {
     }
 }
 
+if IS_IN_PRODUCTION:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -141,24 +144,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-if DEBUG:
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATICFILES_DIRS = []
-
-
-MEDIA_ROOT = [os.path.join(BASE_DIR, 'media')]
-
-INTERNAL_IPS = ['127.0.0.1']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, '../static'),
+)
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
+if IS_IN_PRODUCTION:
+    # Activate Django-Heroku.
+    import django_heroku
+    django_heroku.settings(locals())
 
 
-
-if os.environ.get('ENV') == 'PRODUCTION' :
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)

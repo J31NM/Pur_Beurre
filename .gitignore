@@ -4,5 +4,6 @@ venv/
 __Pycache__/
 apps/members/playground.py
 secret_key.txt
-pur_beurre/helper.py
+pur_beurre2/pur_beurre/helper.py
 desktop.ini
+pur_beurre2

@@ -19,20 +19,17 @@ from django.views.static import serve
 from django.contrib import admin
 from django.urls import path, include
 
-from products import views
+from apps.products import views
 
-# if settings.FAKE_STATIC_PROD:
-#     from helper import fake_static_for_prod as static
-# else:
 from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('', views.index, name="home"),
-    path('products/', include('products.urls')),
+    path('products/', include('apps.products.urls')),
     path('tatou/', admin.site.urls),
-    path('members/', include('members.urls')),
+    path('members/', include('apps.members.urls')),
     path('legals/', views.legals, name="legal_notices"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
