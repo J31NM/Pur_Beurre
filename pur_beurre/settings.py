@@ -105,7 +105,6 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': SECRET_KEY,
         'HOST': 'localhost',
-        'PORT': '5433',
     }
 }
 
@@ -164,5 +163,3 @@ if IS_IN_PRODUCTION:
     # Activate Django-Heroku.
     import django_heroku
     django_heroku.settings(locals())
-
-
