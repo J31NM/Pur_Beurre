@@ -43,7 +43,7 @@ if settings.DEBUG:
     ] + urlpatterns
 
 
-handler404 = 'products.views.error_404'
-handler500 = 'products.views.error_500'
+handler404 = 'apps.products.views.error_404'
+handler500 = 'apps.products.views.error_500'
 
 
