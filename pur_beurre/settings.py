@@ -28,6 +28,7 @@ if IS_IN_PRODUCTION:
 else:
     SECRET_KEY = 'y_cd%5$wj88xt3-0nf-dypckv3k^7ib02o5t5)p82^xm#ou7c1'
     POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
+    PASSWORD = os.environ.get("PASSWORD")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_IN_PRODUCTION
