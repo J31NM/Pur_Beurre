@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -15,7 +15,7 @@
     <!-- Police Scope One-->
     <link href="https://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css">
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" alt="pur_beurre favicon" href="{% static 'products/img/favicon.png' %}"/>
+    <link rel="icon" type="image/x-icon" href="{% static 'products/img/favicon.png' %}"/>
     <!-- font awesome perso-->
     <script src="https://use.fontawesome.com/b73a508b80.js"></script>
     <!-- Font Awesome icons (free version)-->
@@ -46,7 +46,7 @@
                         <form method="get" autocomplete="off" action="{% url 'products' %}" accept-charset="utf-8">
                             {% csrf_token %}
                             <input class="input-fields" value="" type="text" name="product" id="query-product" placeholder="Chercher"/>
-                            <button id="search-icon" type="submit" style="background-color: #DCDCDC"><img style="max-height: 22px" src="{% static 'products/img/search_icone.png' %}"></button>
+                            <button id="search-icon" type="submit" style="background-color: #DCDCDC"><img style="max-height: 22px" alt="search icon" src="{% static 'products/img/search_icone.png' %}"></button>
                         </form>
                     </a>
                 </li>
