@@ -27,6 +27,7 @@ if IS_IN_PRODUCTION:
     SECRET_KEY = os.environ.get("SECRET_KEY")
 else:
     SECRET_KEY = 'y_cd%5$wj88xt3-0nf-dypckv3k^7ib02o5t5)p82^xm#ou7c1'
+    POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_IN_PRODUCTION
@@ -91,26 +92,29 @@ WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',   # 'postgresql', 'mysql', 'sqlite3', 'oracle'.
-        'NAME': os.path.join(BASE_DIR, 'pur_beurre.db'),
-    },
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'pur_beurre_db',
-#         'USER': 'postgres',
-#         'PASSWORD': SECRET_KEY,
-#         'HOST': 'localhost',
-#         'PORT': '5433',
-#     }
+#         'ENGINE': 'django.db.backends.sqlite3',   # 'postgresql', 'mysql', 'sqlite3', 'oracle'.
+#         'NAME': os.path.join(BASE_DIR, 'pur_beurre.db'),
+#     },
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pur_beurre_db',
+        'USER': 'postgres',
+        'PASSWORD': POSTGRE_KEY,
+        'HOST': 'localhost',
+        'PORT': '5433',
+    }
+
+}
 
 if IS_IN_PRODUCTION:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    # db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    # DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
