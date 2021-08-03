@@ -42,13 +42,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item nav-input">
-                    <a class="nav-link js-scroll-trigger">
+                    <span class="nav-link js-scroll-trigger">
                         <form method="get" autocomplete="off" action="{% url 'products' %}" accept-charset="utf-8">
                             {% csrf_token %}
                             <input class="input-fields" value="" type="text" name="product" id="query-product" placeholder="Chercher"/>
                             <button id="search-icon" type="submit" style="background-color: #DCDCDC"><img style="max-height: 22px" alt="search icon" src="{% static 'products/img/search_icone.png' %}"></button>
                         </form>
-                    </a>
+                    </span>
                 </li>
 
                 {% if user.is_authenticated %}
