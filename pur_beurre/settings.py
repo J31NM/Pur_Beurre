@@ -111,7 +111,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5433',
     }
-
 }
 
 if IS_IN_PRODUCTION:
