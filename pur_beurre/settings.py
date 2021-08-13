@@ -14,7 +14,6 @@ import os
 import dj_database_url
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,7 +29,6 @@ if IS_IN_PRODUCTION:
 else:
     SECRET_KEY = 'y_cd%5$wj88xt3-0nf-dypckv3k^7ib02o5t5)p82^xm#ou7c1'
     POSTGRE_KEY = os.environ.get("POSTGRE_KEY")
-    PASSWORD = os.environ.get("PASSWORD")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_IN_PRODUCTION
@@ -43,9 +41,9 @@ if IS_IN_PRODUCTION:
 
 # # Application definition
 INSTALLED_APPS = [
+    'django.contrib.contenttypes',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -107,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pur_beurre_db',
         'USER': 'postgres',
-        'PASSWORD': PASSWORD,
+        'PASSWORD': os.environ.get("PASSWORD"),
         'HOST': 'localhost',
         'PORT': '5433',
     }
