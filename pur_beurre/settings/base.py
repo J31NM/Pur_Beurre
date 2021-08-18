@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+
     'apps.members',
     'apps.products',
 ]
@@ -78,40 +78,16 @@ TEMPLATES = [
     },
 ]
 
-if DEBUG:
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-    TEMPLATES[0]["OPTIONS"]["context_processors"].insert(0, 'django.template.context_processors.debug')
-
 if IS_IN_PRODUCTION:
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'pur_beurre.urls'
-
-
-
 WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',   # 'postgresql', 'mysql', 'sqlite3', 'oracle'.
-#         'NAME': os.path.join(BASE_DIR, 'pur_beurre.db'),
-#     },
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pur_beurre_db',
-        'USER': 'postgres',
-        'PASSWORD': os.environ.get("PASSWORD"),
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
-}
+DATABASES = {}
 
 if IS_IN_PRODUCTION:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
@@ -159,7 +135,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '../../static'),
 )
 
 LOGIN_REDIRECT_URL = 'home'
