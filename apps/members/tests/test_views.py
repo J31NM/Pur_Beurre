@@ -16,7 +16,7 @@ class TestViews(TestCase):
         response = self.client.get(self.register_url)
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/base.html')
+        self.assertTemplateUsed(response, 'products/base.html')
 
     def test_user_login_view_GET(self):
         response = self.client.get(self.login_url)
