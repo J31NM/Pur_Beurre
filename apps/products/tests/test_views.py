@@ -2,7 +2,6 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from apps.products.models import Product, Category, Favorite
 from django.contrib.auth.models import User
-from apps.products.views import Products
 
 
 class TestViews(TestCase):
@@ -131,6 +130,7 @@ class TestProduct(TestCase):
         self.assertContains(response, "Nous n'avons trouvé aucun produit de substitution pour")
 
     def test_details_page_for_product_GET(self):
+        """web page for products details well displayed only if product code is valid"""
         response = self.client.get("/products/123456789")
         redirected_response = self.client.get("/products/123")
         response2 = self.client.get("/products/123", follow=True)
@@ -145,12 +145,7 @@ class TestProduct(TestCase):
 class TestFavorites(TestCase):
 
     def setUp(self):
-        """
-        test envoi sur add-product et delete-product POST
-        test création favori
-        test supp favori
-        test voir les favoris, bon nombre
-        """
+
         self.client = Client()
         self.save_url = reverse('save_product_into_favorite')
         self.delete_url = reverse('delete_product_into_favorite')
@@ -183,6 +178,7 @@ class TestFavorites(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_save_product_into_favorites_POST(self):
+        """product is well added to user's favorites"""
         response = self.client.post(
             self.save_url,
             data={'product_id': self.fake_product.uid, 'save_favorite': True},
@@ -192,6 +188,7 @@ class TestFavorites(TestCase):
         self.assertEqual(Favorite.objects.first().code, self.fake_product.code)
 
     def test_delete_product_into_favorites_POST(self):
+        """product is well deleted from user's favorites"""
         self.test_save_product_into_favorites_POST()
         response = self.client.post(
             self.delete_url,
