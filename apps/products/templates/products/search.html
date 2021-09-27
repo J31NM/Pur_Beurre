@@ -40,14 +40,15 @@
 {% include "products/display_products.html" with on_favorite_view=False %}
 
 {% else %}
+        {% load static %}
         <section class="page-section bg-primary">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 {% if query %}
-                <h2 class="mb-2 mt-0 mb-0">Nous n'avons trouvé aucun produit de substitution pour `{{ query }}`</h2>
+                <h2 class="mb-2 mt-0 mb-0 vh-10">Nous n'avons trouvé aucun produit de substitution pour `{{ query }}`</h2>
                 {% else %}
-                <h2 class="mb-2 mt-0 mb-0">Nous n'avons pas compris votre demande</h2>
+                <h2 class="mb-2 mt-0 mb-0 vh-10">Nous n'avons pas compris votre demande</h2>
                 {% endif %}
             </div>
         </div>

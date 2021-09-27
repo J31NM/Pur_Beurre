@@ -111,14 +111,16 @@ class Details(ListView):
     model = Product
     template_name = 'products/details.html'
 
+
     def get(self, request, **options):
         """ use the product_code selected by the user to get the data into the database """
         product_code = options.get('product_code')
-        if not product_code:
-            raise ValueError('Invalid Product ID provided')
-        product = self.model.objects.filter(code=product_code).first()
-        return render(request, self.template_name, {'product': product})
-
+        pc = self.model.objects.filter(code=product_code)
+        if not pc:
+            return error_404(request)
+        else:
+            product = self.model.objects.filter(code=product_code).first()
+            return render(request, self.template_name, {'product': product})
 
 class Favorites(LoginRequiredMixin, PaginatedListView):
     """ Display products saved by the registered user """
