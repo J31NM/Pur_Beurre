@@ -24,8 +24,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
 django.setup()
 
 
-
-class Command( BaseCommand):
+class Command(BaseCommand):
     """ Get products from Openfoodfacts API """
     Help = 'Build database'
 
@@ -45,7 +44,7 @@ class Command( BaseCommand):
         root_url = "https://fr.openfoodfacts.org/categorie/{}"
         payloads_template = {
             "page": 1,
-            "page_size": 50,
+            "page_size": 100,
             "json": True,
         }
         levels_translations = {

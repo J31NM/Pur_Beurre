@@ -70,7 +70,7 @@ def delete_product_into_favorite(request):
 
 class PaginatedListView(ListView):
     """ Set number of products displayed per pages """
-    paginate_by = 6
+    paginate_by = 12
 
 
 class Products(PaginatedListView):
@@ -103,14 +103,14 @@ class Products(PaginatedListView):
         if not products:
             return []
         self._selected_product = products.first()
-        return list(products.filter(nutriscore__lt=self._selected_product.nutriscore))
+        return list(products.filter(category=self._selected_product.category,
+                                    nutriscore__lt=self._selected_product.nutriscore))
 
 
 class Details(ListView):
     """ display the selected product details page """
     model = Product
     template_name = 'products/details.html'
-
 
     def get(self, request, **options):
         """ use the product_code selected by the user to get the data into the database """
@@ -121,6 +121,7 @@ class Details(ListView):
         else:
             product = self.model.objects.filter(code=product_code).first()
             return render(request, self.template_name, {'product': product})
+
 
 class Favorites(LoginRequiredMixin, PaginatedListView):
     """ Display products saved by the registered user """
