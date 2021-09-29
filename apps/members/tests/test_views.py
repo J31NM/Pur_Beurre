@@ -14,13 +14,11 @@ class TestViews(TestCase):
 
     def test_user_register_view_GET(self):
         response = self.client.get(self.register_url)
-
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'products/base.html')
 
     def test_user_login_view_GET(self):
         response = self.client.get(self.login_url)
-
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
 
@@ -30,10 +28,8 @@ class TestViews(TestCase):
 
     def test_user_account_view_GET(self):
         response = self.client.get(self.user_account_url)
-
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/user_account.html')
-
 
     def test_user_register_POST_new_profile(self):
         expected_email = 'test_user@mail.com'
@@ -56,12 +52,9 @@ class TestViews(TestCase):
             username=expected_username, password=expected_password
         )
         user = User.objects.create_user(**data)
-
         response = self.client.post(self.login_url, data, follow=True)
-
         self.assertEquals(response.status_code, 200)
         self.assertTrue(response.context['user'].is_active)
         self.assertTrue(response.context['user'].is_authenticated)
 
-        print(response)
 
