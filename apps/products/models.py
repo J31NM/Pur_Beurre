@@ -42,7 +42,7 @@ class Product(models.Model):
                 },
                 'salt': {
                     'quantity': unknown_value,
-                    'level':unknown_value
+                    'level': unknown_value
                 },
                 'sugar': {
                     'quantity': unknown_value,
