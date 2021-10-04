@@ -38,8 +38,19 @@ Link to the app, hosted by Heroku: https://purbeurre-jm.herokuapp.com/
 
 #Install Locally
 
-clone git repository : https://github.com/J31NM/Pur_Beurre
+_ clone git repository : https://github.com/J31NM/Pur_Beurre
 
+_ Add your own DB_PASSWORD local variable in pur_beurre/settings/dev.py
+- you also can modify the other DB local variables if you need
+
+_ run in your terminal : 
+- manage.py makemigrations
+- manage.py migrate
+- manage.py runserver
+
+if you want to run unit tests : open pur_beurre/settings/__init__.py,
+uncomment "from pur_beurre.settings.test import *",
+comment "from pur_beurre.settings.dev import *"
 
 ## GOOD TO KNOW
 _ The products available for research are on the FRENCH Open Food Facts
