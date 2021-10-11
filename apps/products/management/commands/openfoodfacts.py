@@ -44,7 +44,7 @@ class Command(BaseCommand):
         root_url = "https://fr.openfoodfacts.org/categorie/{}"
         payloads_template = {
             "page": 1,
-            "page_size": 100,
+            "page_size": 500,
             "json": True,
         }
         levels_translations = {
