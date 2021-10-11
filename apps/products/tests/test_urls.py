@@ -16,4 +16,3 @@ class TestUrls(TestCase):
     def test_product_detail_view_resolve(self):
         url = reverse('details', kwargs={'product_code': 3257983526219})
         self.assertEquals(resolve(url).func.view_class, views.Details)
-

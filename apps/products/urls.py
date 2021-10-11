@@ -8,4 +8,3 @@ urlpatterns = [
     path(r'save_product/', views.save_product_into_favorite, name="save_product_into_favorite"),
     path(r'delete_product/', views.delete_product_into_favorite, name="delete_product_into_favorite"),
 ]
-

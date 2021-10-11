@@ -20,4 +20,3 @@ class TestUrls(TestCase):
     def test_user_account_url_resolve(self):
         url = reverse('user_account')
         self.assertEquals(resolve(url).func.view_class, views.UserAccountView)
-

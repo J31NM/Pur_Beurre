@@ -22,6 +22,3 @@ class CreateUserForm(Bs4FormMixin, UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         field_classes = ['form-control', 'form-control-lg']
-
-
-

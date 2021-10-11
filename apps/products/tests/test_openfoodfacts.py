@@ -42,7 +42,6 @@ class TestCategories(TestSetUp):
 
         }
 
-
     @mock.patch("apps.products.management.commands.openfoodfacts.requests.get")
     def test_fetch_categories(self, mocked_request):
         expected_list = ["Aliments et boissons à base de végétaux", "Snacks"]
@@ -108,4 +107,3 @@ class TestProducts(TestSetUp):
         self.assertEquals(categories_count, 1)
         self.assertEquals(products_count, 3)
         self.assertEquals(products.count(), 3)
-
