@@ -7,7 +7,7 @@ class SimpleTest(LiveServerTestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome(r'C:\Users\jeanm\Desktop\Bureau\OC\8_Plateform_Nutella\Pur_Beurre\chromedriver')
-        self.driver.get('http://127.0.0.1:8000/')
+        self.driver.get('https://purbeurre-jm.herokuapp.com/')
         self.original_window = self.driver.current_window_handle
 
     def test_simple(self):
