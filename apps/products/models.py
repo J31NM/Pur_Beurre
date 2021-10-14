@@ -77,7 +77,7 @@ class Product(models.Model):
             raise ValueError('No user set for product: {}'.format(self))
 
         if isinstance(self.user, User):
-            return bool(Favorite.objects.filter(picture=self.picture, user=self.user))
+            return bool(Favorite.objects.filter(user=self.user, product=self))
         return False
 
     def __str__(self):
@@ -85,24 +85,22 @@ class Product(models.Model):
 
 
 class Favorite(models.Model):
-    """ Favorite table """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
-    code = models.CharField(max_length=64)
-    brand = models.CharField(max_length=200, blank=True, null=True)
-    nutriscore = models.CharField(max_length=1)
-    url = models.URLField(null=True)
-    picture = models.URLField(null=True, max_length=500)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,
-                                 related_name='favorites', blank=True)
+    """
+    Favorite table
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='favorites')
+
+    class Meta:
+        unique_together = ["user", "product"]
 
     @property
     def uid(self):
-        return self.picture
+        return self.product.picture
 
     @property
     def is_favorite(self):
         return True
 
     def __str__(self):
-        return self.name
+        return self.product.name

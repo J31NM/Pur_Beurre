@@ -50,7 +50,7 @@ def save_product_into_favorite(request):
         except Product.DoesNotExist:
             messages.error(request, "Ce produit n'existe plus")
             raise
-        Favorite.objects.create(user=request.user, **product.to_dict)
+        Favorite.objects.create(user=request.user, product_id=product_id)
         messages.success(request, "Le produit a bien été ajouté à vos favoris !")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -58,9 +58,9 @@ def save_product_into_favorite(request):
 def delete_product_into_favorite(request):
     """ delete product from favorites table if user uses "Supprimer des favoris" button """
     if 'delete_favorite' in request.POST:
-        favorite_id = request.POST.get('product_id')
+        product_id = request.POST.get('product_id')
         try:
-            favorite = Favorite.objects.get(id=favorite_id)
+            favorite = Favorite.objects.get(product_id=product_id)
         except Favorite.DoesNotExist:
             messages.error(request, "Ce produit n'existe plus")
             raise
@@ -132,3 +132,11 @@ class Favorites(LoginRequiredMixin, PaginatedListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
+
+    def get_context_data(self, *args, **kwargs):
+        """ """
+        Product.user = self.request.user
+        context = super().get_context_data(*args, **kwargs)
+        context['object_list'] = [favorite.product for favorite in context['object_list']]
+        return context
+
