@@ -185,14 +185,14 @@ class TestFavorites(TestCase):
             follow=True
         )
         self.assertEquals(response.status_code, 200)
-        self.assertEqual(Favorite.objects.first().code, self.fake_product.code)
+        self.assertEqual(Favorite.objects.first().product_id, self.fake_product.id)
 
     def test_delete_product_into_favorites_POST(self):
         """product is well deleted from user's favorites"""
         self.test_save_product_into_favorites_POST()
         response = self.client.post(
             self.delete_url,
-            data={'product_id': Favorite.objects.first().id, 'delete_favorite': True},
+            data={'product_id': Favorite.objects.first().product_id, 'delete_favorite': True},
             follow=True
         )
         self.assertEquals(response.status_code, 200)
