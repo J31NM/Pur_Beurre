@@ -15,7 +15,7 @@
                 <div>
                     <form class="row justify-content-center form-group" method="get" action="{% url 'products' %}" autocomplete="off" accept-charset="utf-8">
                         {% csrf_token %}
-                        <input class="input-products w-50" type="text" name="product" value="" id="query-product" placeholder="Produit"/>
+                        <input class="input-products autoc w-50" type="text" name="product" value="" id="query-product" placeholder="Produit"/>
                         <button type="submit" class="btn btn-primary btn-product js-scroll-trigger">Chercher</button>
                     </form>
                 </div>

@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from apps.products.models import Product, Category, Favorite
 from django.contrib.auth.models import User
-
+import json
 
 class TestViews(TestCase):
 
@@ -197,3 +197,67 @@ class TestFavorites(TestCase):
         )
         self.assertEquals(response.status_code, 200)
         self.assertEqual(Favorite.objects.all().count(), 0)
+
+
+class Suggestion(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.suggestion_url = reverse('suggestion')
+        self.fake_categories = Category.objects.bulk_create([
+            Category(id=2000, name='fruit'),
+            Category(id=2001, name='extras')
+        ])
+        self.fake_products = Product.objects.bulk_create([
+            Product(
+                name='ananas',
+                nutriscore='b',
+                url='https://fr.openfoodfacts.org/produit/8410128891169/pain',
+                picture='https://images.openfoodfacts.org/images/products/90444470/front_fr.64.400.jpg',
+                category_id=2000,
+                code='123456789'
+            ),
+            Product(
+                name="anaractorou",
+                nutriscore='e',
+                url='https://fr.openfoodfacts.org/produit/8410128891169/pain',
+                picture='https://images.openfoodfacts.org/images/products/90444470/front_fr.64.400.jpg',
+                category_id=2000,
+                code='134456789'
+            ),
+            Product(
+                name='riz noir',
+                nutriscore='a',
+                url='https://fr.openfoodfacts.org/produit/8410128891169/glace',
+                picture='https://images.openfoodfacts.org/images/products/90444470/front_fr.64.700.jpg',
+                category_id=2001,
+                code='987654322'
+            ),
+            Product(
+                name='riz cantonnais',
+                nutriscore='a',
+                url='https://fr.openfoodfacts.org/produit/8410128891169/glace',
+                picture='https://images.openfoodfacts.org/images/products/90444470/front_fr.64.700.jpg',
+                category_id=2001,
+                code='987654322'
+            ),
+            Product(
+                name='riz',
+                nutriscore='a',
+                url='https://fr.openfoodfacts.org/produit/8410128891169/glace',
+                picture='https://images.openfoodfacts.org/images/products/90444470/front_fr.64.700.jpg',
+                category_id=2001,
+                code='987654322'
+            )
+        ])
+
+    def test_suggestion_GET(self):
+        """check that each letter added modify results list"""
+        response = self.client.get(self.suggestion_url, data={"term": "ri"})
+        response2 = self.client.get(self.suggestion_url, data={"term": "ana"})
+        response3 = self.client.get(self.suggestion_url, data={"term": "anan"})
+        self.assertEquals(response.status_code, 200)
+        self.assertEqual(len(json.loads(response.content)), 3)
+        self.assertEqual(len(json.loads(response2.content)), 2)
+        self.assertEqual(len(json.loads(response3.content)), 1)
+

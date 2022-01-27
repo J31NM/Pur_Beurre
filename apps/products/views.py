@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import Product, Favorite
 
 
@@ -66,6 +66,15 @@ def delete_product_into_favorite(request):
             raise
         favorite.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def suggestion(request):
+    """ fetch products in database for autocompletion """
+    query_original = request.GET.get('term')
+    queryset = Product.objects.filter(name__icontains=query_original)
+    namelist = []
+    namelist += [x.name for x in queryset]
+    return JsonResponse(namelist[:25], safe=False)
 
 
 class PaginatedListView(ListView):

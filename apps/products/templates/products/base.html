@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="{% static 'products/css/all.css' %}">
     <!-- Bootstrap Core CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'products/css/styles.css' %}"/>
+    <!-- Jquery Autocomplete CSS-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"/>
     {% block extra_css %}
     {% endblock %}
 
@@ -45,7 +47,7 @@
                     <div class="nav-link js-scroll-trigger">
                         <form method="get" autocomplete="off" action="{% url 'products' %}" accept-charset="utf-8">
                             {% csrf_token %}
-                            <input class="input-fields" value="" type="text" name="product" id="query-product" placeholder="Chercher"/>
+                            <input class="input-fields autoc" value="" type="text" name="product" id="query-product" placeholder="Chercher"/>
                             <button id="search-icon" type="submit" style="background-color: #DCDCDC"><img style="max-height: 22px" alt="search icon" src="{% static 'products/img/search_icone.png' %}"></button>
                         </form>
                     </div>
@@ -92,12 +94,21 @@
 {% endblock %}
 
 <!-- Bootstrap core JS-->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<!-- Autocomplete -->
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <!-- Core theme JS-->
+<script>
+    $( ".autoc" ).autocomplete({
+        source: "{% url 'suggestion' %}",
+        minLength: 3,
+    });
+    $('.ui-autocomplete').css({background: '#DCDCDC', font: "Open Sans"});
+</script>
 {#<script src="js/scripts.js"></script>#}
 </body>
 </html>
