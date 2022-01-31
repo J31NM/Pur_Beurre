@@ -4,6 +4,7 @@ from apps.products.models import Product, Category, Favorite
 from django.contrib.auth.models import User
 import json
 
+
 class TestViews(TestCase):
 
     def setUp(self):

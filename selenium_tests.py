@@ -1,12 +1,13 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 class SimpleTest(LiveServerTestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome(r'C:\Users\jeanm\Desktop\Bureau\OC\8_Plateform_Nutella\Pur_Beurre\chromedriver')
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.get('https://purbeurre-jm.herokuapp.com/')
         self.original_window = self.driver.current_window_handle
 
@@ -37,6 +38,24 @@ class SimpleTest(LiveServerTestCase):
         link.click()
         page_title =self.driver.find_element_by_tag_name('h1').text
         self.assertEqual(page_title, "MENTIONS LÉGALES")
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+class AutocompleteTest(LiveServerTestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver.get('https://purbeurre-jm.herokuapp.com/')
+        self.original_window = self.driver.current_window_handle
+
+    def test_autocomplete(self):
+        auto_complete = self.driver.find_element_by_class_name('autoc')
+        auto_complete.send_keys('fraise')
+        auto_complete.send_keys(Keys.ARROW_DOWN)
+        auto_complete.send_keys(Keys.RETURN)
+        assert "fraise" in self.driver.page_source
 
     def tearDown(self):
         self.driver.quit()
