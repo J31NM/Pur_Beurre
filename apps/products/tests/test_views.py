@@ -98,7 +98,7 @@ class TestProduct(TestCase):
     def test_search_index_user_question_get(self):
         """User input used for request"""
         response = self.client.get(
-            self.products_url, {"product": "pizza"}
+            self.products_url, {"product": "lait"}
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "lait")
