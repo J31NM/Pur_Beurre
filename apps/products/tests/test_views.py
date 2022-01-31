@@ -96,20 +96,16 @@ class TestProduct(TestCase):
         self.assertTemplateUsed(response, 'products/search.html')
 
     def test_search_index_user_question_get(self):
-        """User input used for request"""
-        response = self.client.get(
-            self.products_url, {"product": "pizza"}
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "lait")
-
-    def test_search_index_user_empty_question_get(self):
-        """Good error message displayed for empty request"""
-        response = self.client.get(
-            self.products_url, {"product": ""}
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Nous n'avons pas compris votre demande")
+        a = 0
+        search_inputs = ["", "lait de coco"]
+        results = ["Nous n'avons pas compris votre demande", "lait"]
+        for input in search_inputs:
+            response = self.client.get(
+                self.products_url, {"product": search_inputs[a]}
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, results[a])
+            a += 1
 
     def test_substitute_found(self):
         """Substitute displayed depends on category, nutriscore and name_contains_request"""
